@@ -1,0 +1,24 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Ajo kerran yössä klo 00:00 UTC
+  workflow_dispatch:     # Mahdollistaa manuaalisen käynnistyksen
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Sync fork
+        uses: tgymnich/fork-sync@v1.8
+        with:
+          owner: InfoTUNI
+          repo: datatie2025
+          base: main
+          head: main
+          token: ${{ secrets.GITHUB_TOKEN }}
